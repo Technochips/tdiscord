@@ -40,6 +40,22 @@ namespace tdiscord
 		}
 		public void Run(string email, string password)
 		{
+			client.MessageReceived += (s, e) =>
+			{
+				var fc = Console.ForegroundColor;
+				var bc = Console.BackgroundColor;
+				if (e.User.IsBot)
+				{
+					Console.ForegroundColor = ConsoleColor.White;
+					Console.BackgroundColor = ConsoleColor.DarkCyan;
+					Console.Write("BOT");
+				}
+				Console.ForegroundColor = ConsoleColor.Yellow;
+				Console.BackgroundColor = bc;
+				Console.Write(" " + e.User.Name);
+				Console.ForegroundColor = fc;
+				Console.WriteLine(" " + e.Message.Text);
+			};
 			client.ExecuteAndWait(async () =>
 			{
 				await client.Connect(email, password);
